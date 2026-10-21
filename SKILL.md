@@ -1,6 +1,6 @@
 ---
 name: svn-slim
-description: SVN 工作副本 .svn 目录瘦身——诊断空间构成、安全回收数十 GB，并自带清理后自测（验证 update/commit/revert/diff 仍完好）。用于".svn 太大/怎么清理 SVN 空间/工作副本占满磁盘/pristine 几十 GB"。核心路径 vacuum → revert → exclude → vacuum，禁止直接删 pristine 目录。
+description: Shrink a bloated SVN working copy — diagnose .svn size, safely reclaim tens of GB via official svn commands, and self-test update/commit/revert/diff afterwards. SVN 工作副本 .svn 目录瘦身：诊断空间构成、安全回收、清理后自测。Triggers / 用于 ".svn 太大"、"怎么清理 SVN 空间"、"工作副本占满磁盘"、"pristine 几十 GB"、"svn working copy too large"、"reclaim svn disk space"、"cleanup svn pristine"。核心路径 vacuum → revert → exclude → vacuum，禁止直接删 pristine 目录。
 ---
 
 # svn-slim：SVN 工作副本 .svn 瘦身

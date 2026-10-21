@@ -37,16 +37,40 @@ SVN 1.7+ 的工作副本只有一个顶层 `.svn`，其中 `pristine/` 存放每
   - 没有 svn 也能跑 `scan`（纯只读诊断），但 `clean` / `verify` 需要它
 
 ```bash
-curl -O https://raw.githubusercontent.com/Vamoul/svn-slim/main/svn_slim.py
+curl -O https://raw.githubusercontent.com/Vamsoul/svn-slim/main/svn_slim.py
 ```
 
 ### 作为 Agent Skill 安装（可选）
 
 本仓库根目录同时带一份 `SKILL.md`（[Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) 格式）。
-如果你用的 agent 支持这个格式（WorkBuddy、Claude Code 等），可以整包放进技能目录，让 agent 自己判断何时调用：
+**注意：agent 不会扫描任意路径**，只认自己固定的技能目录。所以不是"在 agent 里指向解压后的路径"，
+而是把整个目录**放到**下表对应的位置：
+
+| Agent | 安装到（用户级） | 项目级 |
+|---|---|---|
+| WorkBuddy | `~/.workbuddy/skills/svn-slim/` | `<项目>/.workbuddy/skills/svn-slim/` |
+| Claude Code | `~/.claude/skills/svn-slim/` | `<项目>/.claude/skills/svn-slim/` |
+| OpenCode | `~/.config/opencode/skills/svn-slim/`（也读 `~/.claude/` 和 `~/.agents/`） | `.opencode/skills/`、`.claude/skills/`、`.agents/skills/` |
+| Codex | `~/.agents/skills/svn-slim/` | `<项目>/.agents/skills/svn-slim/` |
+| ZCode | `~/.zcode/skills/svn-slim/` | 见其 Settings → Skills |
+| DeepSeek Harness | `~/.agents/skills/svn-slim/` 或 `$DSH_HOME/skills/svn-slim/` | `<项目>/.dsh/skills/` 或 `<项目>/.agents/skills/` |
+| 其它遵循 Agent Skills 规范的实现 | `~/.agents/skills/svn-slim/` | `<项目>/.agents/skills/svn-slim/` |
+
+**省事做法**：`~/.agents/skills/svn-slim/` 这一个位置，Codex、DeepSeek Harness、OpenCode 都能认；
+剩下的 WorkBuddy / Claude Code / ZCode 各要自己的目录，再 clone 一份过去即可（本体只有 40 KB）。
+
+**两个必须注意的点：**
+
+1. **目录名必须是 `svn-slim`**，要和 `SKILL.md` 里的 `name:` 字段一致。用 `Code → Download ZIP`
+   解压出来的是 `svn-slim-main/`，**必须手动改名成 `svn-slim`**，否则部分 agent 拒绝加载。
+2. **不要依赖嵌套目录**（例如 `skills/foo/svn-slim/SKILL.md`）。DeepSeek Harness 明确不支持递归扫描，
+   部分实现同样如此 —— 必须正好落在规定根目录的**直属子目录**里。
+3. 想同时给多个 agent 用，就 clone 多份到各自的目录（本体只有 40 KB，不心疼）。
+
+`git clone` 一行搞定（以 WorkBuddy 为例，其它同理换路径）：
 
 ```bash
-git clone https://github.com/Vamoul/svn-slim.git ~/.workbuddy/skills/svn-slim
+git clone https://github.com/Vamsoul/svn-slim.git ~/.workbuddy/skills/svn-slim
 ```
 
 装好后重开会话，直接说"`.svn` 太大了帮我清理"即可。**不需要 skill 的话可以完全忽略这一节**，

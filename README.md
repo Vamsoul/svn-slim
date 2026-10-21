@@ -37,8 +37,20 @@ SVN 1.7+ 的工作副本只有一个顶层 `.svn`，其中 `pristine/` 存放每
   - 没有 svn 也能跑 `scan`（纯只读诊断），但 `clean` / `verify` 需要它
 
 ```bash
-curl -O https://raw.githubusercontent.com/<Vamsoul>/svn-slim/main/svn_slim.py
+curl -O https://raw.githubusercontent.com/Vamoul/svn-slim/main/svn_slim.py
 ```
+
+### 作为 Agent Skill 安装（可选）
+
+本仓库根目录同时带一份 `SKILL.md`（[Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) 格式）。
+如果你用的 agent 支持这个格式（WorkBuddy、Claude Code 等），可以整包放进技能目录，让 agent 自己判断何时调用：
+
+```bash
+git clone https://github.com/Vamoul/svn-slim.git ~/.workbuddy/skills/svn-slim
+```
+
+装好后重开会话，直接说"`.svn` 太大了帮我清理"即可。**不需要 skill 的话可以完全忽略这一节**，
+把它当普通命令行工具用就行。
 
 ## 用法
 

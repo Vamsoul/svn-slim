@@ -37,7 +37,7 @@ SVN 1.7+ 的工作副本只有一个顶层 `.svn`，其中 `pristine/` 存放每
   - 没有 svn 也能跑 `scan`（纯只读诊断），但 `clean` / `verify` 需要它
 
 ```bash
-curl -O https://raw.githubusercontent.com/<你的用户名>/svn-slim/main/svn_slim.py
+curl -O https://raw.githubusercontent.com/<Vamsoul>/svn-slim/main/svn_slim.py
 ```
 
 ## 用法
